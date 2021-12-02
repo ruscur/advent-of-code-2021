@@ -1,9 +1,9 @@
 use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 
 fn parse(buf: &mut BufReader<File>) -> Result<Vec<u64>, Box<dyn std::error::Error>> {
-    let mut depths: Vec<u64> = vec!();
+    let mut depths: Vec<u64> = vec![];
 
     // We could check for increases here so we don't have to read the vec again.
     // That is more performant, but makes it harder to make changes later.
@@ -13,7 +13,7 @@ fn parse(buf: &mut BufReader<File>) -> Result<Vec<u64>, Box<dyn std::error::Erro
     Ok(depths)
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>>{
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut path = PathBuf::new();
     path.push(std::env::var("CARGO_MANIFEST_DIR")?);
     path.push("input");
@@ -28,7 +28,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
     // (199, 200), (200, 208), (208, 210) ...
     let depth_pairs = depths.iter().zip(depths.iter().skip(1));
 
-    println!("Part 1: {}", depth_pairs.clone().filter(|(x, y)| x < y).count());
+    println!(
+        "Part 1: {}",
+        depth_pairs.clone().filter(|(x, y)| x < y).count()
+    );
 
     // ((199, 200), 208), ((200, 208), 210), ((208, 210), 200) ...
     let depth_triplets = depth_pairs.zip(depths.iter().skip(2));
