@@ -17,9 +17,14 @@ fn get_oxygen_generator_rating(reports: &Vec<u16>, diag_len: u16) -> u16 {
     for x in (0..diag_len).rev() {
         let ones_count = filter.iter().filter(|diag| (*diag & (1 << x) > 0)).count();
         let ones_common = if ones_count * 2 >= filter.len() { 1 } else { 0 };
-        filter = filter.into_iter().filter(|diag| (*diag & (1 << x)) == (ones_common << x)).collect();
+        filter = filter
+            .into_iter()
+            .filter(|diag| (*diag & (1 << x)) == (ones_common << x))
+            .collect();
 
-        if filter.len() == 1 { return *filter.get(0).unwrap() }
+        if filter.len() == 1 {
+            return *filter.get(0).unwrap();
+        }
     }
     0
 }
@@ -30,9 +35,14 @@ fn get_co2_scrubber_rating(reports: &Vec<u16>, diag_len: u16) -> u16 {
         let ones_count = filter.iter().filter(|diag| (*diag & (1 << x) > 0)).count();
         let ones_uncommon = if ones_count * 2 >= filter.len() { 0 } else { 1 };
 
-        filter = filter.into_iter().filter(|diag| (*diag & (1 << x)) == (ones_uncommon << x)).collect();
+        filter = filter
+            .into_iter()
+            .filter(|diag| (*diag & (1 << x)) == (ones_uncommon << x))
+            .collect();
 
-        if filter.len() == 1 { return *filter.get(0).unwrap() }
+        if filter.len() == 1 {
+            return *filter.get(0).unwrap();
+        }
     }
     0
 }
@@ -76,7 +86,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let co2_scrubber_rating: u16 = get_co2_scrubber_rating(&report, diag_len);
     let life_support_rating = (oxygen_generator_rating as u64) * (co2_scrubber_rating as u64);
 
-    dbg!(oxygen_generator_rating, co2_scrubber_rating, life_support_rating);
+    dbg!(
+        oxygen_generator_rating,
+        co2_scrubber_rating,
+        life_support_rating
+    );
 
     Ok(())
 }
