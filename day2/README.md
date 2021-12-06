@@ -20,11 +20,8 @@ use `bail!()` when something was wrong.
 The benefit of over-engineering is that changing stuff for part 2s
 is really easy.
 
-I'm not super happy with the `fold()` either.  My `Submarine` struct
-is just 3 values so repeatedly yielding it isn't a big deal, but it
-still seems gross especially since the part 2 change makes it so that
-you couldn't get the same results from parallelising the `fold()`.
+From the future: I should've used `Forward(u8)` in the enum definition
+instead of having to have a `value: u8` in the struct.
 
-So I'd probably prefer to have it in a simple for loop to better
-communicate that it needs to be handled sequentially.  I do love
-avoiding a mutable result though.
+I should've added a `default()` method to `Submarine` instead of having
+to create a new one as the accumulator.
