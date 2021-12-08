@@ -106,7 +106,7 @@ fn deduce_segments(pattern: Vec<Vec<u8>>) -> Vec<u8> {
     });
 
     // Of the three with 6 segments (0, 6, 9), 0 misses 'd', 6 misses 'c', 9 misses 'e'.
-    // So the digit containing none of (b, c, d, f) must be 9.
+    // So the digit containing all of (b, c, d, f) must be 9.
     digits[9] = pattern
         .iter()
         .filter(|&x| count_digits(x.to_vec()) == 6)
